@@ -1,6 +1,5 @@
 # CMPageControl
 
-[![CI Status](http://img.shields.io/travis/Mycose/CMPageControl.svg?style=flat)](https://travis-ci.org/Clément Morissard/CMPageControl)
 [![Version](https://img.shields.io/cocoapods/v/CMPageControl.svg?style=flat)](http://cocoapods.org/pods/CMPageControl)
 [![License](https://img.shields.io/cocoapods/l/CMPageControl.svg?style=flat)](http://cocoapods.org/pods/CMPageControl)
 [![Platform](https://img.shields.io/cocoapods/p/CMPageControl.svg?style=flat)](http://cocoapods.org/pods/CMPageControl)
