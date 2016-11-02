@@ -18,6 +18,7 @@ public protocol CMPageControlDelegate {
     func shouldChangeIndex(from : Int, to : Int) -> Bool
 }
 
+@IBDesignable
 public class CMPageControl: UIControl {
 
     // MARK: - PRIVATE PROPERTIES
@@ -55,19 +56,31 @@ public class CMPageControl: UIControl {
         }
     }
 
-    public var numberOfElements : Int = 0 {
+    @IBInspectable public var numberOfElements : Int = 0 {
         didSet {
             setup()
         }
     }
 
-    public var isRounded : Bool = true {
+    @IBInspectable public var elementWidth : CGFloat = 7.0 {
+        didSet {
+            buttonWidth = elementWidth * 1.5
+        }
+    }
+
+    @IBInspectable public var elementCornerRadius : CGFloat = 5.0 {
+        didSet {
+            setup()
+        }
+    }
+
+    @IBInspectable public var isRounded : Bool = true {
         didSet {
             for view in views {
                 if let view = view {
                     if (isRounded == true) {
                         view.layer.masksToBounds = true
-                        view.layer.cornerRadius = elementWidth/2.0
+                        view.layer.cornerRadius = elementCornerRadius
                     } else {
                         view.layer.masksToBounds = false
                         view.layer.cornerRadius = 0
@@ -77,13 +90,13 @@ public class CMPageControl: UIControl {
         }
     }
 
-    public var elementImage : UIImage? {
+    @IBInspectable public var elementImage : UIImage? {
         didSet {
             setup()
         }
     }
 
-    public var elementBackgroundColor : UIColor = UIColor.white.withAlphaComponent(0.2) {
+    @IBInspectable public var elementBackgroundColor : UIColor = UIColor.white.withAlphaComponent(0.2) {
         didSet {
             for view in views {
                 if let view = view, view != currentView {
@@ -93,7 +106,7 @@ public class CMPageControl: UIControl {
         }
     }
 
-    public var elementBorderColor : UIColor = UIColor.clear {
+    @IBInspectable public var elementBorderColor : UIColor = UIColor.clear {
         didSet {
             for view in views {
                 if let view = view, view != currentView {
@@ -103,7 +116,7 @@ public class CMPageControl: UIControl {
         }
     }
 
-    public var elementBorderWidth : CGFloat = 0.0 {
+    @IBInspectable public var elementBorderWidth : CGFloat = 0.0 {
         didSet {
             for view in views {
                 if let view = view, view != currentView {
@@ -113,7 +126,7 @@ public class CMPageControl: UIControl {
         }
     }
 
-    public var elementSelectedImage : UIImage? {
+    @IBInspectable public var elementSelectedImage : UIImage? {
         didSet {
             if let view = currentView as? UIImageView {
                 view.image = elementSelectedImage
@@ -121,7 +134,7 @@ public class CMPageControl: UIControl {
         }
     }
 
-    public var elementSelectedBackgroundColor : UIColor = UIColor.white {
+    @IBInspectable public var elementSelectedBackgroundColor : UIColor = UIColor.white {
         didSet {
             if let view = currentView {
                 view.backgroundColor = elementSelectedBackgroundColor
@@ -129,7 +142,7 @@ public class CMPageControl: UIControl {
         }
     }
 
-    public var elementSelectedBorderColor : UIColor = UIColor.clear {
+    @IBInspectable public var elementSelectedBorderColor : UIColor = UIColor.clear {
         didSet {
             if let view = currentView {
                 view.layer.borderColor = elementSelectedBorderColor.cgColor
@@ -137,7 +150,7 @@ public class CMPageControl: UIControl {
         }
     }
 
-    public var elementSelectedBorderWidth : CGFloat = 0.0 {
+    @IBInspectable public var elementSelectedBorderWidth : CGFloat = 0.0 {
         didSet {
             if let view = currentView {
                 view.layer.borderWidth = elementSelectedBorderWidth
@@ -145,13 +158,7 @@ public class CMPageControl: UIControl {
         }
     }
 
-    public var elementWidth : CGFloat = 7.0 {
-        didSet {
-            buttonWidth = elementWidth * 1.5
-        }
-    }
-
-    public var orientation : CMPageControlOrientation = .Horizontal {
+    @IBInspectable public var orientation : CMPageControlOrientation = .Horizontal {
         didSet {
             setup()
         }
@@ -194,7 +201,7 @@ public class CMPageControl: UIControl {
                 view.layer.borderWidth = elementBorderWidth
                 if (isRounded == true) {
                     view.layer.masksToBounds = true
-                    view.layer.cornerRadius = elementWidth/2.0
+                    view.layer.cornerRadius = elementCornerRadius
                 }
             }
 
