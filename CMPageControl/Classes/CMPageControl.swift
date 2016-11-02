@@ -29,7 +29,7 @@ public class CMPageControl: UIControl {
     fileprivate var buttonWidth : CGFloat = 16.0
 
     fileprivate func cleanViews() {
-        for view in self.views {
+        for view in views {
             if let view = view {
                 view.removeFromSuperview()
                 views[view.tag] = nil
@@ -40,15 +40,15 @@ public class CMPageControl: UIControl {
     // MARK: - PUBLIC PROPERTIES
     public var currentIndex : Int = 0 {
         didSet {
-            if self.currentIndex < 0 || self.currentIndex > self.numberOfElements-1 { return }
+            if currentIndex < 0 || currentIndex > numberOfElements-1 { return }
 
-            for view in self.views {
+            for view in views {
                 if let view = view {
-                    if view.tag == self.currentIndex {
-                        self.currentView = view
-                        self.setSelectedStyleForView(view: view, animated: true)
+                    if view.tag == currentIndex {
+                        currentView = view
+                        setSelectedStyleForView(view: view, animated: true)
                     } else {
-                        self.setUnselectedStyleForView(view: view, animated: true)
+                        setUnselectedStyleForView(view: view, animated: true)
                     }
                 }
             }
@@ -57,17 +57,17 @@ public class CMPageControl: UIControl {
 
     public var numberOfElements : Int = 0 {
         didSet {
-            self.setup()
+            setup()
         }
     }
 
     public var isRounded : Bool = true {
         didSet {
-            for view in self.views {
+            for view in views {
                 if let view = view {
-                    if (self.isRounded == true) {
+                    if (isRounded == true) {
                         view.layer.masksToBounds = true
-                        view.layer.cornerRadius = self.elementWidth/2.0
+                        view.layer.cornerRadius = elementWidth/2.0
                     } else {
                         view.layer.masksToBounds = false
                         view.layer.cornerRadius = 0
@@ -79,15 +79,15 @@ public class CMPageControl: UIControl {
 
     public var elementImage : UIImage? {
         didSet {
-            self.setup()
+            setup()
         }
     }
 
     public var elementBackgroundColor : UIColor = UIColor.gray {
         didSet {
-            for view in self.views {
-                if let view = view, view != self.currentView {
-                    view.backgroundColor = self.elementBackgroundColor
+            for view in views {
+                if let view = view, view != currentView {
+                    view.backgroundColor = elementBackgroundColor
                 }
             }
         }
@@ -95,9 +95,9 @@ public class CMPageControl: UIControl {
 
     public var elementBorderColor : UIColor = UIColor.gray {
         didSet {
-            for view in self.views {
-                if let view = view, view != self.currentView {
-                    view.layer.borderColor = self.elementBorderColor.cgColor
+            for view in views {
+                if let view = view, view != currentView {
+                    view.layer.borderColor = elementBorderColor.cgColor
                 }
             }
         }
@@ -105,9 +105,9 @@ public class CMPageControl: UIControl {
 
     public var elementBorderWidth : CGFloat = 1.0 {
         didSet {
-            for view in self.views {
-                if let view = view, view != self.currentView {
-                    view.layer.borderWidth = self.elementBorderWidth
+            for view in views {
+                if let view = view, view != currentView {
+                    view.layer.borderWidth = elementBorderWidth
                 }
             }
         }
@@ -115,101 +115,101 @@ public class CMPageControl: UIControl {
 
     public var elementSelectedImage : UIImage? {
         didSet {
-            if let view = self.currentView as? UIImageView {
-                view.image = self.elementSelectedImage
+            if let view = currentView as? UIImageView {
+                view.image = elementSelectedImage
             }
         }
     }
 
     public var elementSelectedBackgroundColor : UIColor = UIColor.white {
         didSet {
-            if let view = self.currentView {
-                view.backgroundColor = self.elementSelectedBackgroundColor
+            if let view = currentView {
+                view.backgroundColor = elementSelectedBackgroundColor
             }
         }
     }
 
     public var elementSelectedBorderColor : UIColor = UIColor.white {
         didSet {
-            if let view = self.currentView {
-                view.layer.borderColor = self.elementSelectedBorderColor.cgColor
+            if let view = currentView {
+                view.layer.borderColor = elementSelectedBorderColor.cgColor
             }
         }
     }
 
     public var elementSelectedBorderWidth : CGFloat = 2.0 {
         didSet {
-            if let view = self.currentView {
-                view.layer.borderWidth = self.elementSelectedBorderWidth
+            if let view = currentView {
+                view.layer.borderWidth = elementSelectedBorderWidth
             }
         }
     }
 
     public var elementWidth : CGFloat = 10.0 {
         didSet {
-            self.buttonWidth = self.elementWidth * 1.5
+            buttonWidth = elementWidth * 1.5
         }
     }
 
     public var orientation : CMPageControlOrientation = .Horizontal {
         didSet {
-            self.setup()
+            setup()
         }
     }
 
     public var delegate : CMPageControlDelegate?
 
     fileprivate func setup() {
-        self.cleanViews()
+        cleanViews()
 
-        let nbSpace : Int = self.numberOfElements + 1
+        let nbSpace : Int = numberOfElements + 1
         var spaceWidth : CGFloat = 0.0
         var xPos : CGFloat = 0.0
         var yPos : CGFloat = 0.0
 
-        views = Array(repeating: nil, count: self.numberOfElements)
-        for i in 0..<self.numberOfElements {
+        views = Array(repeating: nil, count: numberOfElements)
+        for i in 0..<numberOfElements {
 
-            if (self.orientation == .Horizontal) {
-                spaceWidth = (self.frame.width - (CGFloat(self.numberOfElements) * self.elementWidth)) / CGFloat(nbSpace)
-                xPos = (CGFloat(i) * self.elementWidth) + (CGFloat(i+1) * spaceWidth)
-                yPos = (self.frame.height - self.elementWidth) / 2
+            if (orientation == .Horizontal) {
+                spaceWidth = (frame.width - (CGFloat(numberOfElements) * elementWidth)) / CGFloat(nbSpace)
+                xPos = (CGFloat(i) * elementWidth) + (CGFloat(i+1) * spaceWidth)
+                yPos = (frame.height - elementWidth) / 2
             } else {
-                spaceWidth = (self.frame.height - (CGFloat(self.numberOfElements) * self.elementWidth)) / CGFloat(nbSpace)
-                yPos = (CGFloat(i) * self.elementWidth) + (CGFloat(i+1) * spaceWidth)
-                xPos = (self.frame.width - self.elementWidth) / 2
+                spaceWidth = (frame.height - (CGFloat(numberOfElements) * elementWidth)) / CGFloat(nbSpace)
+                yPos = (CGFloat(i) * elementWidth) + (CGFloat(i+1) * spaceWidth)
+                xPos = (frame.width - elementWidth) / 2
             }
 
             var view : UIView = UIView()
 
-            if let image = self.elementImage {
-                let imageView = UIImageView(frame: CGRect(x: xPos, y: yPos, width: self.elementWidth, height: self.elementWidth))
+            if let image = elementImage {
+                let imageView = UIImageView(frame: CGRect(x: xPos, y: yPos, width: elementWidth, height: elementWidth))
                 imageView.contentMode = .scaleAspectFit
                 imageView.image = image
                 view = imageView
             } else {
-                view = UIView(frame: CGRect(x: xPos, y: yPos, width: self.elementWidth, height: self.elementWidth))
-                view.backgroundColor = self.elementBackgroundColor
-                view.layer.borderColor = self.elementBorderColor.cgColor
-                view.layer.borderWidth = self.elementBorderWidth
-                if (self.isRounded == true) {
+                view = UIView(frame: CGRect(x: xPos, y: yPos, width: elementWidth, height: elementWidth))
+                view.backgroundColor = elementBackgroundColor
+                view.layer.borderColor = elementBorderColor.cgColor
+                view.layer.borderWidth = elementBorderWidth
+                if (isRounded == true) {
                     view.layer.masksToBounds = true
-                    view.layer.cornerRadius = self.elementWidth/2.0
+                    view.layer.cornerRadius = elementWidth/2.0
                 }
             }
 
-            let button = UIButton(frame: CGRect(x: 0, y: 0, width: self.buttonWidth, height: self.buttonWidth))
+            let button = UIButton(frame: CGRect(x: 0, y: 0, width: buttonWidth, height: buttonWidth))
             button.center = view.center
             button.tag = i
             button.addTarget(self, action: #selector(buttonClicked(sender:)), for: .touchUpInside)
 
-            self.addSubview(view)
-            self.addSubview(button)
+            addSubview(view)
+            addSubview(button)
 
             view.tag = i
             views[i] = view
         }
-        self.currentIndex = 0
+        currentIndex = 0
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -221,32 +221,32 @@ public class CMPageControl: UIControl {
     }
 
     @objc fileprivate func buttonClicked(sender : UIButton) {
-        let shouldChange = self.delegate?.shouldChangeIndex(from: self.currentIndex, to: sender.tag) ?? true
-        self.delegate?.elementClicked(pageControl: self, atIndex: sender.tag)
+        let shouldChange = delegate?.shouldChangeIndex(from: currentIndex, to: sender.tag) ?? true
+        delegate?.elementClicked(pageControl: self, atIndex: sender.tag)
         if shouldChange == true {
-            self.currentIndex = sender.tag
+            currentIndex = sender.tag
         }
     }
 
     fileprivate func setSelectedStyleForView(view : UIView, animated : Bool) {
         if let view = view as? UIImageView {
-            if let image = self.elementSelectedImage {
+            if let image = elementSelectedImage {
                 view.image = image
             }
         }
-        view.backgroundColor = self.elementSelectedBackgroundColor
-        view.layer.borderWidth = self.elementSelectedBorderWidth
-        view.layer.borderColor = self.elementSelectedBorderColor.cgColor
+        view.backgroundColor = elementSelectedBackgroundColor
+        view.layer.borderWidth = elementSelectedBorderWidth
+        view.layer.borderColor = elementSelectedBorderColor.cgColor
     }
 
     fileprivate func setUnselectedStyleForView(view : UIView, animated : Bool) {
         if let view = view as? UIImageView {
-            if let image = self.elementImage {
+            if let image = elementImage {
                 view.image = image
             }
         }
-        view.backgroundColor = self.elementBackgroundColor
-        view.layer.borderWidth = self.elementBorderWidth
-        view.layer.borderColor = self.elementBorderColor.cgColor
+        view.backgroundColor = elementBackgroundColor
+        view.layer.borderWidth = elementBorderWidth
+        view.layer.borderColor = elementBorderColor.cgColor
     }
 }
