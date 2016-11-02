@@ -8,15 +8,10 @@
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
-## Changes
-
-Future
+## Future
 - Maybe remove the delegation since it's an UIControl
 - Animation for changing selected element
 - Any ideas or request ?
-
-v0.0.1
-- Draft version
 
 ## CMPageControl
 CMPageControl is a UIControl working like a UIPageControl but support horizontal/vertical display and is customisable.
