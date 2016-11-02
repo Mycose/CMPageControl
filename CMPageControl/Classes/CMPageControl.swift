@@ -26,7 +26,7 @@ public class CMPageControl: UIControl {
     fileprivate var views : [UIView?] = []
     fileprivate var imageViews : [UIImageView?] = []
 
-    fileprivate var buttonWidth : CGFloat = 16.0
+    fileprivate var buttonWidth : CGFloat = 10.0
 
     fileprivate func cleanViews() {
         for view in views {
@@ -83,7 +83,7 @@ public class CMPageControl: UIControl {
         }
     }
 
-    public var elementBackgroundColor : UIColor = UIColor.gray {
+    public var elementBackgroundColor : UIColor = UIColor.white.withAlphaComponent(0.2) {
         didSet {
             for view in views {
                 if let view = view, view != currentView {
@@ -93,7 +93,7 @@ public class CMPageControl: UIControl {
         }
     }
 
-    public var elementBorderColor : UIColor = UIColor.gray {
+    public var elementBorderColor : UIColor = UIColor.clear {
         didSet {
             for view in views {
                 if let view = view, view != currentView {
@@ -103,7 +103,7 @@ public class CMPageControl: UIControl {
         }
     }
 
-    public var elementBorderWidth : CGFloat = 1.0 {
+    public var elementBorderWidth : CGFloat = 0.0 {
         didSet {
             for view in views {
                 if let view = view, view != currentView {
@@ -129,7 +129,7 @@ public class CMPageControl: UIControl {
         }
     }
 
-    public var elementSelectedBorderColor : UIColor = UIColor.white {
+    public var elementSelectedBorderColor : UIColor = UIColor.clear {
         didSet {
             if let view = currentView {
                 view.layer.borderColor = elementSelectedBorderColor.cgColor
@@ -137,7 +137,7 @@ public class CMPageControl: UIControl {
         }
     }
 
-    public var elementSelectedBorderWidth : CGFloat = 2.0 {
+    public var elementSelectedBorderWidth : CGFloat = 0.0 {
         didSet {
             if let view = currentView {
                 view.layer.borderWidth = elementSelectedBorderWidth
@@ -145,7 +145,7 @@ public class CMPageControl: UIControl {
         }
     }
 
-    public var elementWidth : CGFloat = 10.0 {
+    public var elementWidth : CGFloat = 7.0 {
         didSet {
             buttonWidth = elementWidth * 1.5
         }
