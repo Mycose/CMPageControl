@@ -1,6 +1,10 @@
 # Change Log
 
 ## [v0.0.2](https://github.com/Mycose/CMPageControl/tree/v0.0.2) (2016-11-02)
+- Add a new customisable property : cornerRadius
+- Add IBInspectable and IBDesignable for full support in IB files
+- Change default style to UIPageControl style
+
 [Full Changelog](https://github.com/Mycose/CMPageControl/compare/v0.0.1...v0.0.2)
 
 ## [v0.0.1](https://github.com/Mycose/CMPageControl/tree/v0.0.1) (2016-10-28)
