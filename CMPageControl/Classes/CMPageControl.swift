@@ -220,6 +220,27 @@ public class CMPageControl: UIControl {
         super.init(frame: frame)
     }
 
+    override public func layoutSubviews() {
+        let nbSpace : Int = self.numberOfElements + 1
+        var spaceWidth : CGFloat = 0.0
+        var xPos : CGFloat = 0.0
+        var yPos : CGFloat = 0.0
+        for view in views {
+            if let view = view {
+                if (self.orientation == .Horizontal) {
+                    spaceWidth = (self.frame.width - (CGFloat(self.numberOfElements) * self.elementWidth)) / CGFloat(nbSpace)
+                    xPos = (CGFloat(view.tag) * self.elementWidth) + (CGFloat(view.tag+1) * spaceWidth)
+                    yPos = (self.frame.height - self.elementWidth) / 2
+                } else {
+                    spaceWidth = (self.frame.height - (CGFloat(self.numberOfElements) * self.elementWidth)) / CGFloat(nbSpace)
+                    yPos = (CGFloat(view.tag) * self.elementWidth) + (CGFloat(view.tag+1) * spaceWidth)
+                    xPos = (self.frame.width - self.elementWidth) / 2
+                }
+                view.frame = CGRect(x: xPos, y: yPos, width: self.elementWidth, height: self.elementWidth)
+            }
+        }
+    }
+
     @objc fileprivate func buttonClicked(sender : UIButton) {
         let shouldChange = delegate?.shouldChangeIndex(from: currentIndex, to: sender.tag) ?? true
         delegate?.elementClicked(pageControl: self, atIndex: sender.tag)
