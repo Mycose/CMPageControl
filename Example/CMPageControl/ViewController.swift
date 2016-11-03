@@ -43,6 +43,7 @@ class ViewController: UIViewController {
         pageControl1?.elementWidth = 16.0
         pageControl1?.elementCornerRadius = 8.0
         pageControl1?.elementBorderWidth = 0.0
+        pageControl1?.elementSpacing = 20.0
         pageControl1?.elementSelectedBorderWidth = 0.0
         pageControl1?.elementSelectedBackgroundColor = UIColor(red: 47.0/255.0, green: 143.0/255.0, blue: 176.0/255.0, alpha: 1.0)
         pageControl1?.orientation = .Horizontal
