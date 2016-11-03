@@ -62,6 +62,8 @@ public class CMPageControl: UIControl {
         }
     }
 
+    @IBInspectable public var elementSpacing : CGFloat = 10.0
+
     @IBInspectable public var elementWidth : CGFloat = 7.0 {
         didSet {
             buttonWidth = elementWidth * 1.5
@@ -228,19 +230,22 @@ public class CMPageControl: UIControl {
     }
 
     override public func layoutSubviews() {
-        let nbSpace : Int = numberOfElements + 1
-        var spaceWidth : CGFloat = 0.0
+        let nbSpace : Int = numberOfElements - 1
+        let elementsWidth : CGFloat = CGFloat(numberOfElements) * elementWidth
+        let elementsSpacing : CGFloat = CGFloat(nbSpace) * elementSpacing
+        let frameWidth : CGFloat = (orientation == .Horizontal) ? self.frame.width : self.frame.height
+        let posStart : CGFloat = (frameWidth - (elementsWidth + elementsSpacing)) / 2.0
+
         var xPos : CGFloat = 0.0
         var yPos : CGFloat = 0.0
         for view in views {
             if let view = view {
+                let index : CGFloat = CGFloat(view.tag)
                 if (orientation == .Horizontal) {
-                    spaceWidth = (frame.width - (CGFloat(numberOfElements) * elementWidth)) / CGFloat(nbSpace)
-                    xPos = (CGFloat(view.tag) * elementWidth) + (CGFloat(view.tag+1) * spaceWidth)
+                    xPos = posStart + (index * elementWidth) + (index * elementSpacing)
                     yPos = (frame.height - elementWidth) / 2
                 } else {
-                    spaceWidth = (frame.height - (CGFloat(numberOfElements) * elementWidth)) / CGFloat(nbSpace)
-                    yPos = (CGFloat(view.tag) * elementWidth) + (CGFloat(view.tag+1) * spaceWidth)
+                    yPos = posStart + (index * elementWidth) + (index * elementSpacing)
                     xPos = (frame.width - elementWidth) / 2
                 }
                 view.frame = CGRect(x: xPos, y: yPos, width: elementWidth, height: elementWidth)
