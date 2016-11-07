@@ -1,15 +1,15 @@
 PODS:
-  - CMPageControl (0.1.0)
+  - CMPageControl (0.0.3)
 
 DEPENDENCIES:
   - CMPageControl (from `../`)
 
 EXTERNAL SOURCES:
   CMPageControl:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
-  CMPageControl: 561b4455a7e04ab8f73e90da4527c77e2c3624bd
+  CMPageControl: d75736677e89264cada7019e22568e1d9c6e8a9b
 
 PODFILE CHECKSUM: f276dfd344882d1c73913e623abf7de84c3dccba
 
