@@ -26,6 +26,7 @@ public class CMPageControl: UIControl {
 
     fileprivate var views : [UIView?] = []
     fileprivate var imageViews : [UIImageView?] = []
+    fileprivate var buttons : [UIButton?] = []
 
     fileprivate var buttonWidth : CGFloat = 10.0
 
@@ -34,6 +35,12 @@ public class CMPageControl: UIControl {
             if let view = view {
                 view.removeFromSuperview()
                 views[view.tag] = nil
+            }
+        }
+        for button in buttons {
+            if let btn = button {
+                btn.removeFromSuperview()
+                buttons[btn.tag] = nil
             }
         }
     }
@@ -72,7 +79,14 @@ public class CMPageControl: UIControl {
 
     @IBInspectable public var elementCornerRadius : CGFloat = 5.0 {
         didSet {
-            setup()
+            if (isRounded == true) {
+                for view in views {
+                    if let view = view {
+                        view.layer.masksToBounds = true
+                        view.layer.cornerRadius = elementCornerRadius
+                    }
+                }
+            }
         }
     }
 
@@ -177,6 +191,7 @@ public class CMPageControl: UIControl {
         var yPos : CGFloat = 0.0
 
         views = Array(repeating: nil, count: numberOfElements)
+        buttons = Array(repeating: nil, count: numberOfElements)
         for i in 0..<numberOfElements {
 
             if (orientation == .Horizontal) {
@@ -217,6 +232,7 @@ public class CMPageControl: UIControl {
 
             view.tag = i
             views[i] = view
+            buttons[i] = button
         }
         currentIndex = 0
     }
@@ -249,6 +265,7 @@ public class CMPageControl: UIControl {
                     xPos = (frame.width - elementWidth) / 2
                 }
                 view.frame = CGRect(x: xPos, y: yPos, width: elementWidth, height: elementWidth)
+                buttons[view.tag]?.center = view.center
             }
         }
     }
