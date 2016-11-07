@@ -194,6 +194,7 @@ public class CMPageControl: UIControl {
         buttons = Array(repeating: nil, count: numberOfElements)
         for i in 0..<numberOfElements {
 
+            // calculate x and y depending on if vertical or horizontal and depending on index
             if (orientation == .Horizontal) {
                 spaceWidth = (frame.width - (CGFloat(numberOfElements) * elementWidth)) / CGFloat(nbSpace)
                 xPos = (CGFloat(i) * elementWidth) + (CGFloat(i+1) * spaceWidth)
@@ -206,6 +207,7 @@ public class CMPageControl: UIControl {
 
             var view : UIView = UIView()
 
+            // if there is an image set, create UIImageView instead of UIView
             if let image = elementImage {
                 let imageView = UIImageView(frame: CGRect(x: xPos, y: yPos, width: elementWidth, height: elementWidth))
                 imageView.contentMode = .scaleAspectFit
@@ -222,17 +224,20 @@ public class CMPageControl: UIControl {
                 }
             }
 
-            let button = UIButton(frame: CGRect(x: 0, y: 0, width: buttonWidth, height: buttonWidth))
-            button.center = view.center
-            button.tag = i
-            button.addTarget(self, action: #selector(buttonClicked(sender:)), for: .touchUpInside)
-
             addSubview(view)
-            addSubview(button)
-
             view.tag = i
             views[i] = view
-            buttons[i] = button
+
+            // button put over the indicator view if width != 0.0 (cant happen normally)
+            // i prefer to use a button over the indicator view because else there is no way to control the clickable area. Here you can just set a bigger value for buttonWidth for a bigger clickable area
+            if buttonWidth != 0.0 {
+                let button = UIButton(frame: CGRect(x: 0, y: 0, width: buttonWidth, height: buttonWidth))
+                button.center = view.center
+                button.tag = i
+                button.addTarget(self, action: #selector(buttonClicked(sender:)), for: .touchUpInside)
+                addSubview(button)
+                buttons[i] = button
+            }
         }
         currentIndex = 0
     }
@@ -265,7 +270,9 @@ public class CMPageControl: UIControl {
                     xPos = (frame.width - elementWidth) / 2
                 }
                 view.frame = CGRect(x: xPos, y: yPos, width: elementWidth, height: elementWidth)
-                buttons[view.tag]?.center = view.center
+                if let btn = buttons[view.tag] {
+                    btn.center = view.center
+                }
             }
         }
     }
